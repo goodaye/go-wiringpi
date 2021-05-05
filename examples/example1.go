@@ -17,4 +17,8 @@ func main() {
 	} else {
 		fmt.Println("WiringPi port 1 is at low")
 	}
+
+	p1 := Pin(10)
+	p1.Output()
+	p1.High()
 }

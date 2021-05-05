@@ -9,6 +9,7 @@ var loaded = false
 // PinMode enumerates available pin modes
 type PinMode int
 
+
 const (
 	// Input set pin for input
 	Input PinMode = C.INPUT
@@ -108,3 +109,4 @@ func Setup(method SetupMethod) (*GPIO, error) {
 		setup: method,
 	}, nil
 }
+
