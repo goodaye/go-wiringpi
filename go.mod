@@ -1,3 +1,3 @@
-module go-wiringpi
+module github.com/goodaye/go-wiringpi
 
-go 1.14
+go 1.15
