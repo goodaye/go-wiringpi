@@ -9,7 +9,6 @@ var loaded = false
 // PinMode enumerates available pin modes
 type PinMode int
 
-
 const (
 	// Input set pin for input
 	Input PinMode = C.INPUT
@@ -85,6 +84,14 @@ func (c *GPIO) DigitalRead(pin int) DigitalValue {
 	return DigitalValue(C.digitalRead(C.int(pin)))
 }
 
+// Pin  Create Pin
+func (c *GPIO) Pin(pin int) Pin {
+	return Pin{
+		gpio: c,
+		Code: pin,
+	}
+}
+
 // Setup setup the GPIO interface
 func Setup(method SetupMethod) (*GPIO, error) {
 	if loaded {
@@ -109,4 +116,3 @@ func Setup(method SetupMethod) (*GPIO, error) {
 		setup: method,
 	}, nil
 }
-

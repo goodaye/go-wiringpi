@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"go-wiringpi"
+	"github.com/goodaye/go-wiringpi"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 		fmt.Println("WiringPi port 1 is at low")
 	}
 
-	p1 := Pin(10)
+	p1 := gpio.Pin(10)
 	p1.Output()
 	p1.High()
 }

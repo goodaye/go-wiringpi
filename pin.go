@@ -1,38 +1,41 @@
-package  wiringpi
+package wiringpi
 
-type Pin uint8
+type Pin struct {
+	gpio *GPIO
+	Code int
+}
 
 // Input: Set pin as Input
 func (pin Pin) Input() {
-	PinMode(pin, Input)
+	pin.gpio.PinMode(pin.Code, Input)
 }
 
 // Output: Set pin as Output
 func (pin Pin) Output() {
-	PinMode(pin, Output)
+	pin.gpio.PinMode(pin.Code, Output)
 }
 
 // Clock: Set pin as Clock
 func (pin Pin) Clock() {
-	PinMode(pin, Clock)
+	pin.gpio.PinMode(pin.Code, GpioClock)
 }
 
 // Pwm: Set pin as Pwm
-func (pin Pin) Pwm() {
-	PinMode(pin, Pwm)
+func (pin Pin) PWM() {
+	pin.gpio.PinMode(pin.Code, PWMOutput)
 }
 
 // High: Set pin High
 func (pin Pin) High() {
-	WritePin(pin, High)
+	pin.gpio.DigitalWrite(pin.Code, High)
 }
 
 // Low: Set pin Low
 func (pin Pin) Low() {
-	WritePin(pin, Low)
+	pin.gpio.DigitalWrite(pin.Code, Low)
 }
 
-// Toggle pin state
-func (pin Pin) Toggle() {
-	TogglePin(pin)
-}
+// // Toggle pin state
+// func (pin Pin) Toggle() {
+// 	pin.gpio.DigitalWrite(pin.Code, Low)
+// }
