@@ -39,3 +39,8 @@ func (pin Pin) Low() {
 // func (pin Pin) Toggle() {
 // 	pin.gpio.DigitalWrite(pin.Code, Low)
 // }
+
+// Read pin state (high/low)
+func (pin Pin) Read() DigitalValue {
+	return pin.gpio.DigitalRead(pin.Code)
+}
