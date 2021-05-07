@@ -42,58 +42,44 @@ const (
 	Low DigitalValue = C.LOW
 )
 
-// GPIO is the main handler for GPIO ports.
-// use Setup function to get a *GPIO instead of creating directly
-type GPIO struct {
-	setup SetupMethod
-}
-
-// PinMode sets pin mode
-func (c *GPIO) PinMode(pin int, mode PinMode) {
+// SetPinMode sets pin mode
+func SetPinMode(pin int, mode PinMode) {
 	C.pinMode(C.int(pin), C.int(mode))
 }
 
 // Pull sets pull up/down mode
-func (c *GPIO) Pull(pin int, mode PullMode) {
+func Pull(pin int, mode PullMode) {
 	C.pullUpDnControl(C.int(pin), C.int(mode))
 }
 
 // DigitalWrite writes digital value to pin
-func (c *GPIO) DigitalWrite(pin int, val DigitalValue) {
+func DigitalWrite(pin int, val DigitalValue) {
 	C.digitalWrite(C.int(pin), C.int(val))
 }
 
 // PWMSetRange set PWM generator range
 // defaults to 1024
-func (c *GPIO) PWMSetRange(val uint) {
+func PWMSetRange(val uint) {
 	C.pwmSetRange(C.uint(val))
 }
 
 // PWMSetClock sets the divisor of PWM clock
-func (c *GPIO) PWMSetClock(val int) {
+func PWMSetClock(val int) {
 	C.pwmSetClock(C.int(val))
 }
 
 // PWMWrite writes pwn value
-func (c *GPIO) PWMWrite(pin int, val int) {
+func PWMWrite(pin int, val int) {
 	C.pwmWrite(C.int(pin), C.int(val))
 }
 
 // DigitalRead reads digital value
-func (c *GPIO) DigitalRead(pin int) DigitalValue {
+func DigitalRead(pin int) DigitalValue {
 	return DigitalValue(C.digitalRead(C.int(pin)))
 }
 
-// Pin  Create Pin
-func (c *GPIO) Pin(pin int) Pin {
-	return Pin{
-		gpio: c,
-		Code: pin,
-	}
-}
-
 // Setup setup the GPIO interface
-func Setup(method SetupMethod) (*GPIO, error) {
+func Setup(method SetupMethod) error {
 	if loaded {
 		panic("wiring pi is already loaded")
 	}
@@ -109,10 +95,8 @@ func Setup(method SetupMethod) (*GPIO, error) {
 		ret = C.wiringPiSetupSys()
 	}
 	if ret != 0 {
-		return nil, RetCode{int(ret)}
+		return RetCode{int(ret)}
 	}
 	loaded = true
-	return &GPIO{
-		setup: method,
-	}, nil
+	return nil
 }
